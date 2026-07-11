@@ -22,6 +22,14 @@ Require the user workspace to contain `填写要求.txt`, an inventory CSV, and 
 
 Use the `imagegen` skill. Inspect all source images first. Select the clearest white-background product photo as the structural reference.
 
+### Mandatory image-tool gate
+
+Before downloading-only processing, creating any spreadsheet, publishing to GitHub, or reporting completion, verify that the active Codex session exposes the built-in `image_gen` tool.
+
+- If `image_gen` is unavailable, stop and tell the user: `图片生成功能在当前 Codex 会话不可用，因此不能完成 TK-UP；未生成图片时不得输出导入表。` Do not substitute source images, copied images, placeholders, or only downloaded assets.
+- If it is available, make real `image_gen` tool calls. A prompt, a script, an image URL list, or a downloaded source image does not count as generation.
+- Record the nine final local output paths in `manifest.json`. Do not create a product workbook, update `input.excel`, or write a category template until the manifest contains all nine files and each is verified at 800×800.
+
 - Run exactly nine image-generation/editing jobs: one new main image plus eight support images. Do not stop at the number of downloaded source images.
 - Localize each usable source image first. Preserve product structure, colors, and material; replace Chinese text with pt-BR only. Exclude source images that show a different SKU/variant unless the workbook declares that variant.
 - When fewer than eight usable source images exist, use the white-background structural reference to generate the missing distinct support images. Fill the next numbered slots with product-only, feature close-up, controls/operation, LED/color mode, lifestyle use, packaging/contents, dimensions (only if verified), and care/detail views. Do not invent specifications, accessories, or medical claims.
