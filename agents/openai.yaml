@@ -1,0 +1,4 @@
+interface:
+  display_name: "TK-UP"
+  short_description: "Batch-create Brazilian TikTok Shop product listings."
+  default_prompt: "Use $tk-up to process these product folders into TikTok Shop category templates."
