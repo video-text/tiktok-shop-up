@@ -13,6 +13,8 @@ Require the user workspace to contain `填写要求.txt`, an inventory CSV, and 
 
 ## Prepare
 
+Process all usable immediate product folders in one batch. Do not narrate scans, downloads, SKU/category lookups, dimensions, or temporary tool errors. Do not pause for routine confirmation; only stop for an absent structural source image or an ambiguous SKU/variant. Empty folders are `skipped_missing_source` and appear only in the final summary.
+
 1. Read `填写要求.txt` in the workspace and the product folder's `.txt` file.
 2. Run `scripts/prepare_product.py <folder> --inventory <csv> --output <output-dir> [--sku <SKU>]`.
    It extracts up to nine source URLs, downloads them, and writes `manifest.json`.
@@ -31,6 +33,7 @@ Before downloading-only processing, creating any spreadsheet, publishing to GitH
 - Record the nine final local output paths in `manifest.json`. Do not create a product workbook, update `input.excel`, or write a category template until the manifest contains all nine files and each is verified at 800×800.
 
 - Produce exactly nine final 800×800 images, but do not run nine blind image-generation jobs. Do not create a single-image trial. First inspect all sources and immediately complete the full set: source images without text are retained/resized; images with text are regenerated in pt-BR; only missing slots are generated from genuine use scenarios.
+- Never generate an image only to check the default output size. Finish all required final images first, then resize every final PNG to 800×800 using one local deterministic step.
 - The first final image is mandatory and must use the exact `填写要求.txt` composition: white-background product reference; product on the right at 60–65%; four vertical benefit panels on the left; bottom 18–22% title area; all visible text natural, complete pt-BR only. Never generate an ordinary product shot as the main image.
 - Preserve product structure, color, material, parts and appearance. Never add/remove/deform items, duplicate fittings, add extra products, use watermarks, or render unnatural hands. Do not invent specifications, accessories or medical claims.
 - Localize each usable source image first. Preserve product structure, colors, and material; replace Chinese text with pt-BR only. Exclude source images that show a different SKU/variant unless the workbook declares that variant.
