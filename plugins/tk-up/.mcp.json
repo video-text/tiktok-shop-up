@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "tk-up": { "command": "node", "args": ["./scripts/tk_up_mcp.mjs"], "cwd": "." }
+  }
+}
