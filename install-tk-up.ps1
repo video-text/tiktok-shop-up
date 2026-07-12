@@ -1,5 +1,6 @@
 $ErrorActionPreference = 'Stop'
-$root = Split-Path -Parent $MyInvocation.MyCommand.Path
+$sourceRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+$root = Join-Path $env:LOCALAPPDATA 'TK-UP\marketplace'
 
 function Find-Executable([string]$name, [string[]]$fallbacks) {
   $found = Get-Command $name -ErrorAction SilentlyContinue
@@ -9,6 +10,12 @@ function Find-Executable([string]$name, [string[]]$fallbacks) {
 }
 
 Write-Host "TK-UP installer" -ForegroundColor Cyan
+
+# Install to one stable path so re-running a newly downloaded ZIP is a real update.
+if (Test-Path $root) { Remove-Item -LiteralPath $root -Recurse -Force }
+New-Item -ItemType Directory -Path $root -Force | Out-Null
+Get-ChildItem -LiteralPath $sourceRoot -Force | Where-Object { $_.Name -ne '.git' } |
+  Copy-Item -Destination $root -Recurse -Force
 
 $npm = Find-Executable 'npm.cmd' @("$env:ProgramFiles\nodejs\npm.cmd")
 if (-not $npm) {
@@ -40,6 +47,8 @@ Write-Host 'Installing Excel support...'
 & $python -m pip install --user --quiet openpyxl
 
 Write-Host 'Registering TK-UP with Codex...'
+# A previous package may point at an old ZIP folder; replace it with the stable path above.
+& $codex plugin marketplace remove tk-up-marketplace 2>$null
 & $codex plugin marketplace add $root
 & $codex plugin add tk-up@tk-up-marketplace
 
