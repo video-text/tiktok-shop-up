@@ -1,0 +1,12 @@
+{
+  "name": "tk-up-marketplace",
+  "interface": { "displayName": "TK-UP" },
+  "plugins": [
+    {
+      "name": "tk-up",
+      "source": { "source": "local", "path": "./plugins/tk-up" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}

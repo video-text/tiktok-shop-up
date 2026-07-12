@@ -1,0 +1,17 @@
+{
+  "name": "tk-up",
+  "version": "0.1.0",
+  "description": "Prepare, verify, and write TikTok Shop category-template upload files.",
+  "author": { "name": "video-text" },
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "TK-UP",
+    "shortDescription": "TikTok Shop template jobs with a nine-image gate.",
+    "longDescription": "Prepares product jobs, verifies nine 800×800 images, and writes only the matched TikTok category template.",
+    "developerName": "video-text",
+    "category": "Productivity",
+    "capabilities": ["Interactive", "Write"],
+    "defaultPrompt": "Use TK-UP to process this product folder. Generate nine images with Codex image generation before finalizing."
+  }
+}
