@@ -30,7 +30,9 @@ Before downloading-only processing, creating any spreadsheet, publishing to GitH
 - If it is available, make real `image_gen` tool calls. A prompt, a script, an image URL list, or a downloaded source image does not count as generation.
 - Record the nine final local output paths in `manifest.json`. Do not create a product workbook, update `input.excel`, or write a category template until the manifest contains all nine files and each is verified at 800×800.
 
-- Run exactly nine image-generation/editing jobs: one new main image plus eight support images. Do not stop at the number of downloaded source images.
+- Produce exactly nine final 800×800 images, but do not run nine blind image-generation jobs. Do not create a single-image trial. First inspect all sources and immediately complete the full set: source images without text are retained/resized; images with text are regenerated in pt-BR; only missing slots are generated from genuine use scenarios.
+- The first final image is mandatory and must use the exact `填写要求.txt` composition: white-background product reference; product on the right at 60–65%; four vertical benefit panels on the left; bottom 18–22% title area; all visible text natural, complete pt-BR only. Never generate an ordinary product shot as the main image.
+- Preserve product structure, color, material, parts and appearance. Never add/remove/deform items, duplicate fittings, add extra products, use watermarks, or render unnatural hands. Do not invent specifications, accessories or medical claims.
 - Localize each usable source image first. Preserve product structure, colors, and material; replace Chinese text with pt-BR only. Exclude source images that show a different SKU/variant unless the workbook declares that variant.
 - When fewer than eight usable source images exist, use the white-background structural reference to generate the missing distinct support images. Fill the next numbered slots with product-only, feature close-up, controls/operation, LED/color mode, lifestyle use, packaging/contents, dimensions (only if verified), and care/detail views. Do not invent specifications, accessories, or medical claims.
 - Call `image_gen` once for every missing numbered slot. Treat a prompt list or an output plan as incomplete work: save an actual generated file for `main.png` and every `image-2.png` through `image-9.png`.
@@ -40,11 +42,10 @@ Before downloading-only processing, creating any spreadsheet, publishing to GitH
 
 1. Publish to `products/<SKU>/` in the configured GitHub image repository. Verify the raw main-image URL returns HTTP 200 before building the workbook.
 2. Price rule: cost below 50 × 5; cost 50 or above × 3. Use available stock as quantity. Estimate package size/weight only when no source data exists, and mark these estimates in the manifest.
-3. Create a one-row `.xlsx` import workbook using the `spreadsheets` skill and the manifest. Include product name/description, all image links, SKU variant, package details, price, quantity, and merchant SKU.
+3. Use GitHub raw image URLs in the nine image columns. Do not create or deliver a generic `.xlsx`/CSV/master table: append only to the one copied TikTok template selected for the product category.
 4. Read `<workspace-root>/类目.md` using UTF-8 and select the most specific listed category for the product. Before merging, update `<workspace-root>/category_map.json` with `{ "<SKU>": "<exact category from 类目.md>" }`. Set brand to `无品牌` for every product.
-5. Update the workspace master table at `input.excel`. Run `scripts/merge_imports.mjs <workspace-root> <workspace-root>/input.excel` from a writable working copy that has access to `@oai/artifact-tool`. It selects the newest completed workbook for each `processed_<SKU>` folder, replaces any existing master rows with the same merchant SKU, and preserves one row per SKU. The first two master columns must be `类目` and `品牌`.
-6. Read `<workspace-root>/muban/类目.md` to map the selected exact category to its `.xlsx` template under `<workspace-root>/muban/leimu`. Run `scripts/write_records_to_templates.py <workspace-root>`. For each category, copy the mapped template once into `类目模板输出/<模板名>/<模板名>.xlsx`, then add or update product records only inside that copied template. Do not create separate product workbooks and never edit the source files in `muban/leimu`.
-7. Verify that only the copied category template `.xlsx` files are delivered from `类目模板输出`.
+5. Read `<workspace-root>/muban/类目.md` to map the selected exact category to its `.xlsx` template under `<workspace-root>/muban/leimu`. For each category, copy the mapped template once into `类目模板输出/<模板名>/<模板名>.xlsx`, then add or update product records only inside that copied template. Do not create separate product workbooks and never edit the source files in `muban/leimu`.
+6. Verify that only the copied category template `.xlsx` files are delivered from `类目模板输出`.
 
 ## Guardrails
 
